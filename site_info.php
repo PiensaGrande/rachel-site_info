@@ -1,5 +1,5 @@
 <?php require_once($_SERVER["DOCUMENT_ROOT"] .  "/admin/common.php"); ?>
-<?php require_once($_SERVER["DOCUMENT_ROOT"] .  "/admin/pg-common.php"); ?>
+<?php require_once("pg-common.php"); ?>
 <?php
 require_once("template.php");
 $currlang = getlang();
