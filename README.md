@@ -51,4 +51,4 @@ TODO:
 
 *create doc to expand on importance of UUID and site specific information to eventual training of ML for AI.
 
-*discuss support of per-module includes in all admin tabs such that a module writer can decide where to place there div by naming their file appropriately.
+*discuss support of per-module includes in all admin tabs such that a module writer can decide where to place their div by naming their file appropriately.
