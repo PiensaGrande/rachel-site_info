@@ -43,7 +43,7 @@ TODO:
 
 *adjust the form interface to remove PG specific defaults for funding source and funding type
 
-*add error messages when attempting to download prior to creating site-info.json
+*add error messages when attempting to download prior to creating site-info.json or adjust stats to not show link.
 
 *decide if we wish to support editing of json elements besides the UUID
 
