@@ -62,7 +62,7 @@ if (isset($_REQUEST['dl_site_info'])) {
       		return true;
 		break;
 	default:
-		// note that the $site_info object and $logdata['uuid'] has been set.
+		// note that the $site_info object and $logdata['uuid'] has been set, so this isn't a do nothing return.
 		return true;
 		break;
    }
@@ -73,7 +73,7 @@ function print_stat_links($templ) {
 		<div class='statsmodule' data-moduletype='{$templ['module_type']}' data-title='{templ['title']}' data-img_uri='{$templ['img_uri']}' data-index_loc='{$templ['index_loc']}'>
 		<h3>{$templ['title']} Stats</h3>
 		<ul>
-        		<li><a href=\"/modules/site_info/rachel-stats.php?dl_direct=1&dl_site_info=1\">{$templ['si-download_json']}</a> 
+        		<li><a href=\"{$templ['stats_web_loc']}?dl_direct=1&dl_site_info=1\">{$templ['si-download_json']}</a> 
 		</ul>
 		</div>";
 	return $output;

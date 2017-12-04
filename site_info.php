@@ -1,3 +1,4 @@
+<?php namespace pg_site_info; ?>
 <?php require_once($_SERVER["DOCUMENT_ROOT"] .  "/admin/common.php"); ?>
 <?php require_once("pg-common.php"); ?>
 <?php
@@ -90,7 +91,7 @@ if (file_exists($site_info_file)){
             <div id='siteDiv' style='margin: 50px 0 50px 0; padding: 10px; border: 1px solid red; background: #fee;'>
             <h4 id='siteInfoStatus'>{$templ['si-siteInfoStatus']}: {$templ['si-uninit']}</h4>
                 <div id='siteInfo'><p>{$templ['si-siteInfo_blurb']}</p>
-                <form method='POST' id='pg_siteinfo_form' class='pg_site_form' action='/modules/site_info/site_info.php'>
+                <form method='POST' id='pg_{$templ["dirname"]}_form' class='pg_site_form' action='{$templ["engine_web_loc"]}'>
                 <table class='version'><tbody>
                 <tr><td>{$templ['si-site_name']}:</td><td><div><input type='text' id='nickname' name='nickname' placeholder='{$templ['si-site_name']}'></div></td><td>{$startgrade_select} {$endgrade_select}</td></tr>
                 <tr><td>{$templ['si-contact']}:</td><td><input type='text' id='contact_name' name='contact_name' placeholder='{$templ['si-contact_name']}'></td>

@@ -1,5 +1,4 @@
 <?php namespace pg_site_info; ?>
-<?php require_once($_SERVER["DOCUMENT_ROOT"] .  "/admin/common.php"); ?>
 <?php 
 // Place module specific hints for RACHEL in template.php
 // For a simple module, that will be all that is necessary.
@@ -7,7 +6,7 @@ include "template.php";
 
 // Permit template.php to define whether we show anything on index.
 // Remember that hiding in admin will cause rachel-admin.php to be hidden as well.
-if ($templ["hide_index"] == "yes") { return; }
+if (strtoupper($templ["hide_index"]) == "YES") { return; }
 
 // Here we build core module structure with logo, title
 // Note the availability of this data to jquery using data-
@@ -43,7 +42,7 @@ if (file_exists($site_info_file)){
 } else {
 	echo "<p>{$templ["description"]}</p>";
 	if (isset($_COOKIE['rachel-auth']) && $_COOKIE['rachel-auth'] == "admin") {
-          echo "<small style='float:right;'><a href=\"modules/{$templ['dirname']}/rachel-admin.php\">[{$templ['si-goto_admin']}]</a></small>";
+          echo "<small style='float:right;'><a href=\"{$templ['admin_web_loc']}\">[{$templ['si-goto_admin']}]</a></small>";
 	}
 }
 echo "</div>";
