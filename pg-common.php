@@ -1,3 +1,4 @@
+<?php namespace pg_site_info; ?>
 <?php
 
 function setPiTimezone() {

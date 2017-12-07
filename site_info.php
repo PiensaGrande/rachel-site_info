@@ -1,8 +1,8 @@
 <?php namespace pg_site_info; ?>
 <?php require_once($_SERVER["DOCUMENT_ROOT"] .  "/admin/common.php"); ?>
-<?php require_once("pg-common.php"); ?>
+<?php require_once(dirname(__FILE__) . "/pg-common.php"); ?>
 <?php
-require_once("template.php");
+include(dirname(__FILE__) . "/template.php");
 $currlang = getlang();
 $site_info_file = $_SERVER["DOCUMENT_ROOT"] . "/site_info.json";
 // For these to affect apache, the IncludeOptional directives have to be set in /etc/apache2/apache2.conf.

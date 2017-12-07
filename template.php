@@ -1,7 +1,7 @@
 <?php namespace pg_site_info; ?>
 <?php require_once($_SERVER["DOCUMENT_ROOT"] .  "/admin/common.php"); ?>
 <?php
-// This is simple module manifest used by RACHEL to display info. 
+// This is simple module manifest used by RACHEL to display info.
 // Used in rachel-index.php, rachel-admin.php, and rachel-stats.php
 // To extend $templ for module specific messages, place in messages.php.
 // TODO: i'd like to see the indexes on the control related stuff reflecting some path info so that
@@ -18,7 +18,7 @@ $tmpl_dir = str_replace($_SERVER['DOCUMENT_ROOT'], '', dirname(__FILE__));
 // a manifest.json file which can be written to programmatically thus enabling a UI for module customizations.
 // and leaving this file to merely parse manifest.json and load the messages.
 
-include "messages.php";
+include dirname(__FILE__) . "/messages.php";
 
 // UI related
 $templ["title"] = "Site Info";
@@ -29,6 +29,7 @@ $templ["admin_web_loc"] = "{$tmpl_dir}/rachel-admin.php";
 $templ["stats_web_loc"] = "{$tmpl_dir}/rachel-stats.php";
 
 // Control related
+$templ["version"] = "v2017.11";
 $templ["dirname"] = basename(__DIR__);
 $templ["engine_loc"] = dirname(__FILE__) . "/site_info.php";
 $templ["js_loc"] = dirname(__FILE__) . "/site_info.js.php";

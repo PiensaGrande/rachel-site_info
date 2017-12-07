@@ -1,5 +1,5 @@
 <?php namespace pg_site_info; ?>
-<?php include "template.php";?>
+<?php include dirname(__FILE__) . "/template.php";?>
 <?php
 $stat_loc = "/admin/pg-stats.php";
 

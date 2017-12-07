@@ -1,7 +1,9 @@
+<?php namespace pg_site_info; ?>
 <?php require_once($_SERVER["DOCUMENT_ROOT"] .  "/admin/common.php"); ?>
 <?php
     $preflang = getlang();
     require_once($_SERVER["DOCUMENT_ROOT"] . "/admin/lang/lang.$preflang.php");
+    include dirname(__FILE__) . "/template.php";
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $lang['langcode'] ?>">
@@ -28,8 +30,9 @@
 </div>
 
 <div id="content">
-<?php include "site_info.php"; ?>
+<?php include $templ['engine_loc']; ?>
 </div>
+<?php include $templ['js_loc']; ?>
 <div class="menubar cf" style="margin-bottom: 80px; position: relative;">
     <ul>
     <li><a href="/index.php" target="_self"><?php echo strtoupper($lang['home']) ?></a></li>
