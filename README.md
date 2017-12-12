@@ -20,7 +20,9 @@ rachel-stats.php provides links to a direct download of that file with the UUID 
 This module also creates two hidden files with UUID and LogFormat information in /var/www/admin.
 For these to affect apache, two IncludeOptional directives have to be set in /etc/apache2/apache2.conf.
 Set first one at the top of the file so the variable is usable throughout, set the second after the other logFormats.
+
 IncludeOptional /var/www/admin/.apache-*-include.conf
+
 IncludeOptional /var/www/admin/.apache-*-logFormats.conf
 
 ## Developer notes 
