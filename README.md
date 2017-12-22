@@ -25,11 +25,11 @@ IncludeOptional /var/www/admin/.apache-*-include.conf
 
 IncludeOptional /var/www/admin/.apache-*-logFormats.conf
 
-## Developer notes 
+## Developer Notes 
 
 Changes to the apache configuration will not show until apache has been restarted.
 
-## Useful practices
+## Useful Practices
 1) The direct download method with UUID in the name is our preferred method for storing logs to a cell phone when one is visiting
 multiple locations.  Note that our image uses this method for all RACHEL core log files once the UUID has been generated. A cell
 phone can be set to auto download all log files when the phone comes within range of the rapsberry pi wifi without the risk of deleting files from another location.
@@ -40,9 +40,11 @@ and loginHistory.log.  Merely including rachel-stats.php before calling rachelLo
 3) This module introduces a module manifest in the form of template.php and messages.php which allow a single module
 to function across multiple languages and moves things like module title, logo location, and description into a single template file.   The module manifest and template.php can also be seen in the control-pi repository.
 
+4) This module shows one way to give Admin the ability to control parts of Apache including a UI select box on apache log format.  Our images, and I presume most country-wide installs, should not permit this as a choice to the user, but it is here as a demonstration of presenting infrastructure choices to the Admin user.  The same method would work for php.ini type changes.
+
 ## Future Direction / TODO
 
-*adjust the form interface to remove PG specific defaults for funding source and funding type
+*further adjust the form interface to remove PG-specific defaults for student-teacher type, underserved scale, funding source and funding type
 
 *add error messages when attempting to download prior to creating site-info.json or adjust stats to not show link.
 
