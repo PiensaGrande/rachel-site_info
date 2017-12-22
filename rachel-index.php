@@ -11,7 +11,7 @@ if (strtoupper($templ["hide_index"]) == "YES") { return; }
 // Here we build core module structure with logo, title
 // Note the availability of this data to jquery using data-
 echo "
-<div class='indexmodule' data-moduletype='{$templ['module_type']}' data-title='{templ['title']}' data-img_uri='{$templ['img_uri']}' data-index_loc='{$templ['index_loc']}'>
+<div class='indexmodule' data-moduletype='{$templ['module_type']}' data-title='{$templ['title']}' data-img_uri='{$templ['img_uri']}' data-index_loc='{$templ['index_loc']}'>
 <a href='{$templ['index_loc']}'>
 <img src='{$templ['img_uri']}' alt='Your Content Logo'>
 </a>

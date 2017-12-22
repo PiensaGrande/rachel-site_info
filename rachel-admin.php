@@ -3,7 +3,7 @@
 include dirname(__FILE__) . "/template.php";
 
 // This is a rachel-admin.php file. It is an optional file that RACHEL uses to
-// display your module on the RACHEL admin page to allow access to admin-specific files or functions. 
+// display your module on the RACHEL admin page to allow access to admin-specific files or functions.
 // You should place this file in your module's directory if needed.
 // As it uses the template.php file, you should be able to set your specific info there.
 
