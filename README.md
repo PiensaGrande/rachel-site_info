@@ -44,8 +44,6 @@ to function across multiple languages and moves things like module title, logo l
 
 ## Future Direction / TODO
 
-*further adjust the form interface to remove PG-specific defaults for student-teacher type, underserved scale, funding source and funding type
-
 *add error messages when attempting to download prior to creating site-info.json or adjust stats to not show link.
 
 *decide if we wish to support editing of json elements besides the UUID
