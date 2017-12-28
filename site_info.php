@@ -12,8 +12,11 @@ $site_info_file = $_SERVER["DOCUMENT_ROOT"] . "/site_info.json";
 $apache_include_file = $_SERVER["DOCUMENT_ROOT"] . "/admin/.apache-{$templ['dirname']}-include.conf";
 $apache_logFormats_file = $_SERVER["DOCUMENT_ROOT"] . "/admin/.apache-{$templ['dirname']}-logFormats.conf";
 
-$location_type_map = array($templ["si-unknown"]=>"-1", $templ["si-rural"]=>"1", $templ["si-urban"]=>"10"); 
+$location_type_map = array($templ["si-unknown"]=>"-1", $templ["si-rural"]=>"1", $templ["si-urban"]=>"10");
+$funding_type_map = array($templ["si-unknown"]=>"-1", $templ["si-charity"]=>"1", $templ["si-school"]=>"2", $templ["si-gov"]=>"3", $templ["si-parent"]=>"4", $templ["si-teacher"]=>"5", $templ["si-individual"]=>"6");
+$student_teacher_type_map = array($templ["si-unknown"]=>"-1", $templ["si-single_teacher_multi_grade"]=>"1", $templ["si-single_teacher_single_grade"]=>"2", $templ["si-multi_teacher_single_grade"]=>"3", $templ["si-multi_teacher_multi_grade"]=>"4", $templ["si-parent_homeschool"]=>"5", $templ["si-individual_tutor"]=>"6", $templ["si-self_directed"]=>"7");
 $logformats_map = array($templ["si-logformats-pg"]=>"1", $templ["si-logformats-wp"]=>"2");
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // We write to /var/www/admin/.apache-include.conf to include uuid in logging as defined in apache2.conf.
@@ -68,18 +71,24 @@ if (file_exists($site_info_file)){
         $siteinfo = file_get_contents($site_info_file);
         $siteinfo_json = json_decode($siteinfo, true); 
 	$loc_type_display = array_search($siteinfo_json['location_type'], $location_type_map);
+	$student_teacher_type_display = array_search($siteinfo_json['student_teacher_type'], $student_teacher_type_map);
+	$funding_type_display = array_search($siteinfo_json['funding_type'], $funding_type_map);
 	$logformats_display = nl2br(file_get_contents($apache_logFormats_file));
         echo "
             <div id='siteDiv' style='margin: 50px 0 50px 0; padding: 10px; border: 1px solid green; background: MintCream;'>
                 <h4 id='siteInfoStatus'>{$templ['si-siteInfoStatus']}: {$templ['si-init']}</h4>
                 <div id='siteInfo'>
                 <table class='version'><tbody>
-                <tr><td>{$templ['si-site_name']}:</td><td>{$siteinfo_json['nickname']}</td><td>{$templ['si-grades']}: {$siteinfo_json['targetgrade_start']} - {$siteinfo_json['targetgrade_end']}</td></tr>
+                <tr><td>{$templ['si-site_name']}:</td><td>{$siteinfo_json['nickname']}</td>
+			<td>{$student_teacher_type_display}</td>
+                        <td>{$templ['si-grades']}: {$siteinfo_json['targetgrade_start']} - {$siteinfo_json['targetgrade_end']}</td></tr>
                 <tr><td>{$templ['si-uuid']}:</td><td>{$siteinfo_json['uuid']}</td><td>{$templ['si-date']}: {$siteinfo_json['date_installed']}</td></tr>
                 <tr><td>{$templ['si-contact']}:</td><td>{$siteinfo_json['contact_name']}</td><td>{$siteinfo_json['contact_phone']}</td></tr>
                 <tr><td>{$templ['si-installer']}:</td><td>{$siteinfo_json['installer_name']}</td><td>{$siteinfo_json['installer_phone']}</td></tr>
-                <tr><td>{$templ['si-location']}:</td><td>{$siteinfo_json['location']}</td><td>{$siteinfo_json['country']}</td><td>{$loc_type_display}</td></tr>
-                <tr><td>{$templ['si-default_lang']}:</td><td>{$siteinfo_json['default_lang']}</td></tr>
+                <tr><td>{$templ['si-location']}:</td><td>{$siteinfo_json['location']}</td><td>{$siteinfo_json['country']}</td><td>{$templ['si-location_type']}: {$loc_type_display}</td></tr>
+		<tr><td>{$templ['si-underserved_scale']}:</td><td>{$siteinfo_json['underserved_scale']}</td></tr>
+                <tr><td>{$templ['si-funding']}:</td><td>{$funding_type_display}</td><td>{$siteinfo_json['funding_source']}</td></tr>
+		<tr><td>{$templ['si-default_lang']}:</td><td>{$siteinfo_json['default_lang']}</td></tr>
 		<tr><td>{$templ['si-logformats']}:</td><td colspan=3>{$logformats_display}</td></tr>
                 </tbody></table>
                 </div>
@@ -98,6 +107,9 @@ if (file_exists($site_info_file)){
         $startgrade_select = build_selectbox(assoc_range(1, 12), "targetgrade_start", '', $templ["si-start_grade"]);
         $endgrade_select = build_selectbox(assoc_range(1, 12), "targetgrade_end", '', $templ["si-end_grade"]);
 	$location_type_select = build_selectbox($location_type_map, "location_type", '', $templ["si-location_type"]);
+	$funding_type_select = build_selectbox($funding_type_map, "funding_type", '', $templ["si-funding_type"]);
+	$student_teacher_type_select = build_selectbox($student_teacher_type_map, "student_teacher_type", '', $templ["si-student_teacher_type"]);
+	$underserved_scale_select = build_selectbox(assoc_range(1, 10), "underserved_scale", '', "{$templ['si-underserved_scale_more']}");
 	$logformats_select = build_selectbox($logformats_map, "logformat", 1, '');
 	echo "
             <div id='siteDiv' style='margin: 50px 0 50px 0; padding: 10px; border: 1px solid red; background: #fee;'>
@@ -105,14 +117,19 @@ if (file_exists($site_info_file)){
                 <div id='siteInfo'><p>{$templ['si-siteInfo_blurb']}</p>
                 <form method='POST' id='pg_{$templ["dirname"]}_form' class='pg_site_form' action='{$templ["engine_web_loc"]}'>
                 <table class='version'><tbody>
-                <tr><td>{$templ['si-site_name']}:</td><td><div><input type='text' id='nickname' name='nickname' placeholder='{$templ['si-site_name']}'></div></td><td>{$startgrade_select} {$endgrade_select}</td></tr>
+                <tr><td>{$templ['si-site_name']}:</td><td><div><input type='text' id='nickname' name='nickname' placeholder='{$templ['si-site_name']}'></div></td>
+			<td>$student_teacher_type_select</td>
+			<td>{$startgrade_select} {$endgrade_select}</td></tr>
                 <tr><td>{$templ['si-contact']}:</td><td><input type='text' id='contact_name' name='contact_name' placeholder='{$templ['si-contact_name']}'></td>
                         <td><input type='text' id='contact_phone' name='contact_phone' placeholder='{$templ['si-contact_phone']}'></td></tr>
                 <tr><td>{$templ['si-installer']}:</td><td><input type='text' id='installer_name' name='installer_name' placeholder='{$templ['si-installer_name']}'></td>
                         <td><input type='text' id='installer_phone' name='installer_phone' placeholder='{$templ['si-installer_phone']}'></td></tr>
                 <tr><td>{$templ['si-location']}:</td><td><input type='text' id='location' name='location' placeholder='{$templ['si-city']}'></td>
                         <td><input type='text' id='country' name='country'  placeholder='{$templ['si-country']}'></td><td>$location_type_select</td></tr>
-	        <tr><td>{$templ['si-default_lang']}:</td><td>
+		<tr><td>{$templ['si-underserved_scale']}:</td><td>$underserved_scale_select</td></tr>
+		<tr><td>{$templ['si-funding']}:</td><td>$funding_type_select</td>
+                        <td><input type='text' id='location' name='funding_source' placeholder='{$templ['si-funding_source']}'></td></tr>
+		<tr><td>{$templ['si-default_lang']}:</td><td>
                 <select id='default_lang' name='default_lang'>
                         <option value='es' {$es_lang_selected}>{$templ['si-es']}</option>
                         <option value='en' {$en_lang_selected}>{$templ['si-en']}</option>
@@ -120,10 +137,6 @@ if (file_exists($site_info_file)){
 		<tr><td>{$templ['si-logformats']}</td><td>$logformats_select</td></tr>
                 </tbody></table>
                 <input type='hidden' name='active' value='1'/>
-                <input type='hidden' name='student_teacher_type' value='-1'/>
-                <input type='hidden' name='funding_type' value='-1'/>
-                <input type='hidden' name='funding_source' value='-1'/>
-                <input type='hidden' name='underserved_scale' value='-1'/>
                 <input type='submit' name='setSiteInfo'  id='SiteInfoButton' value='{$templ['si-submitSiteInfo']}'/>
                 </form>
                 </div>
